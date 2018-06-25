@@ -3,6 +3,8 @@ import './css/App.css';
 import LoginForm from './components/login';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './components/home';
+import Post from './components/post';
+import Register from './components/register';
 
 class App extends Component {
     render() {
@@ -11,6 +13,8 @@ class App extends Component {
                 <div className="App">
                     <Route exact path="/" component={Home}/>
                     <Route path="/login" component={LoginForm}/>
+                    <Route path="/register" component={Register}/>
+                    <Route path="/post" component={Post} />
                 </div>
             </Router>
         );

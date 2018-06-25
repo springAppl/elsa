@@ -10,10 +10,10 @@ import {
     Col,
     message
 } from 'antd';
-import {get} from './FetchUtil';
+import {post} from './FetchUtil';
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+class NormalRegisterForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -35,8 +35,13 @@ class NormalLoginForm extends React.Component {
             .props
             .form
             .getFieldsValue();
-        var url = '/api/user/login?account=' + params['userName'] + '&password=' + params['password'];
-        get(url, (data) => {
+
+        console.log(params);
+        post('/api/user', {
+            name: params['userName'],
+            password: params['password']
+        },
+        (data) => {
             localStorage.setItem('name', data.name);
             this.setState({
                 isLogin: true
@@ -81,18 +86,15 @@ class NormalLoginForm extends React.Component {
                             )}
                         </FormItem>
                         <FormItem>
-                            {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: true
-                            })(
-                                <Checkbox>Remember me</Checkbox>
-                            )}
-                            <a className="login-form-forgot" href="">Forgot password</a>
+                            <Input
+                                        prefix={< Icon type = "lock" style = {{ color: 'rgba(0,0,0,.25)' }}/>}
+                                        type="password"
+                                        placeholder="Please Confirm Password"/>
+                        </FormItem>
+                        <FormItem>
                             <Button type="primary" htmlType="submit" className="login-form-button">
-                                Log in
+                                Register
                             </Button>
-                            Or
-                            <a href="">register now!</a>
                         </FormItem>
                     </Form>
                 </Col>
@@ -102,5 +104,5 @@ class NormalLoginForm extends React.Component {
     }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+const WrappedNormalRegisterForm = Form.create()(NormalRegisterForm);
+export default WrappedNormalRegisterForm;
