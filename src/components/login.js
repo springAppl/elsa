@@ -10,7 +10,11 @@ import {
     Col,
     message
 } from 'antd';
-import {get} from './FetchUtil';
+import {postURL} from './FetchUtil';
+import {Link} from 'react-router-dom';
+import {
+    withRouter
+  } from 'react-router-dom'
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
@@ -35,13 +39,14 @@ class NormalLoginForm extends React.Component {
             .props
             .form
             .getFieldsValue();
-        var url = '/api/user/login?account=' + params['userName'] + '&password=' + params['password'];
-        get(url, (data) => {
+        var url = '/api/login?account=' + params['userName'] + '&password=' + params['password'];
+        postURL(url, (data) => {
             localStorage.setItem('name', data.name);
             this.setState({
                 isLogin: true
             });
             message.success('登录成功');
+            this.props.history.push('/');
         });
     }
     render() {
@@ -92,7 +97,7 @@ class NormalLoginForm extends React.Component {
                                 Log in
                             </Button>
                             Or
-                            <a href="">register now!</a>
+                            <Link to="/register">register now!</Link>
                         </FormItem>
                     </Form>
                 </Col>
@@ -101,6 +106,4 @@ class NormalLoginForm extends React.Component {
         );
     }
 }
-
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+export default withRouter(Form.create()(NormalLoginForm));

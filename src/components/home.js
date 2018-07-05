@@ -2,6 +2,7 @@ import React from 'react';
 import Navigator from './navigator';
 import Tloader from 'react-touch-loader';
 import '../css/home.css';
+import '../css/tloader.less';
 
 export default class Home extends React.Component {
     constructor() {
@@ -10,7 +11,7 @@ export default class Home extends React.Component {
           canRefreshResolve: 1,
           listLen: 0,
           hasMore: 0,
-          initializing: 1,
+          initializing: 0,
           refreshedAt: Date.now()
         }
       }
@@ -44,7 +45,7 @@ export default class Home extends React.Component {
           this.setState({
             listLen: 9,
             hasMore: 1,
-            initializing: 2, // initialized
+            initializing: 0, // initialized
           });
         }, 2e3);
       }
@@ -56,8 +57,7 @@ export default class Home extends React.Component {
 
     render() {
 
-        var { listLen, hasMore, initializing, refreshedAt, canRefreshResolve } = this.state;
-        var { refresh, loadMore, toggleCanRefresh } = this;
+        var { listLen, hasMore, initializing} = this.state;
         var list = [];
     
         if (listLen) {
@@ -75,11 +75,11 @@ export default class Home extends React.Component {
             <div>
                 <Navigator/>
                 <Tloader className="main"
-                onRefresh={(resolve, reject) => this.refresh(resolve, reject)}
-                onLoadMore={(resolve) => this.loadMore(resolve)}
-                hasMore={hasMore}
-                initializing={initializing}>
-                <ul>{list}</ul>
+                  onRefresh={(resolve, reject) => this.refresh(resolve, reject)}
+                  onLoadMore={(resolve) => this.loadMore(resolve)}
+                  hasMore={hasMore}
+                  initializing={initializing}>
+                  <ul>{list}</ul>
                 </Tloader>
             </div>
         );

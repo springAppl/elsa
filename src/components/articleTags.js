@@ -32,12 +32,12 @@ export default class EditableTagGroup extends React.Component {
     if (inputValue && tags.indexOf(inputValue) === -1) {
       tags = [...tags, inputValue];
     }
-    console.log(tags);
     this.setState({
       tags,
       inputVisible: false,
       inputValue: '',
     });
+    this.props.changeTags(tags);
   }
 
   saveInputRef = input => this.input = input
@@ -46,7 +46,7 @@ export default class EditableTagGroup extends React.Component {
     const { tags, inputVisible, inputValue } = this.state;
     return (
       <div>
-        {tags.map((tag, index) => {
+        {tags.map((tag) => {
           const isLongTag = tag.length > 20;
           const tagElem = (
             <Tag key={tag} closable={true} afterClose={() => this.handleClose(tag)}>
@@ -68,10 +68,7 @@ export default class EditableTagGroup extends React.Component {
           />
         )}
         {!inputVisible && (
-          <Tag
-            onClick={this.showInput}
-            style={{ background: '#fff', borderStyle: 'dashed' }}
-          >
+          <Tag onClick={this.showInput} style={{ background: '#fff', borderStyle: 'dashed' }}>
             <Icon type="plus" /> New Tag
           </Tag>
         )}
