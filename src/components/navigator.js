@@ -1,20 +1,50 @@
 import React from 'react';
-import { Menu, Icon, Row, Col } from 'antd';
+import { Menu, Icon, Row, Col} from 'antd';
 import blog from '../image/blog.png';
 import { Link } from 'react-router-dom';
 import '../css/navigator.css';
-
+import {get, post} from './FetchUtil';
+import MenuItem from 'antd/lib/menu/MenuItem';
+const SubMenu = Menu.SubMenu;
 export default class Navigator extends React.Component {
-  state = {
-    current: 'mail',
+  constructor(props) {
+      super(props);
+      this.state = {
+          name: null
+      }
   }
   handleClick = (e) => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
+    if(e.key === 'post') {
+        window.location = '/post';
+    } else if (e.key === 'logout') {
+        this.logout();
+    }
+  }
+  componentWillMount() {
+      get('/api/user/detail', (data) => {
+        this.setState({
+            name: data.name
+        });
+      })
+  }
+  logout = () => {
+    post('/api/logout');
   }
   render() {
+    const loginButton = this.state.name?(
+        <SubMenu title={<span><Icon type="setting" />{this.state.name}</span>}>
+            <MenuItem key="post">
+                发帖
+            </MenuItem>
+            <MenuItem key="logout">
+                退出
+            </MenuItem>
+        </SubMenu>
+    ):(
+        <Menu.Item>
+            <Link to="/login">登录</Link>
+        </Menu.Item>
+    );
     return (
       <Row>
           <Col sm={1} md={1} lg={2}/>
@@ -35,9 +65,6 @@ export default class Navigator extends React.Component {
                 <Menu.Item key="springboot" >
                     <Icon type="appstore" />SpringBoot
                 </Menu.Item>
-                <Menu.Item key="springcloud" >
-                    <Icon type="appstore" />SpringCloud
-                </Menu.Item>
                 <Menu.Item key="react">
                     <Icon type="appstore" />ReactJS
                 </Menu.Item>
@@ -53,6 +80,7 @@ export default class Navigator extends React.Component {
                 <Menu.Item key="wechatapp" >
                     <Icon type="appstore" />微信小程序
                 </Menu.Item>
+                {loginButton}
             </Menu>
           </Col>
           <Col sm={1} md={1} lg={2}/>

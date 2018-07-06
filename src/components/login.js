@@ -7,8 +7,7 @@ import {
     Button,
     Checkbox,
     Row,
-    Col,
-    message
+    Col
 } from 'antd';
 import {postURL} from './FetchUtil';
 import {Link} from 'react-router-dom';
@@ -40,14 +39,7 @@ class NormalLoginForm extends React.Component {
             .form
             .getFieldsValue();
         var url = '/api/login?account=' + params['userName'] + '&password=' + params['password'];
-        postURL(url, (data) => {
-            localStorage.setItem('name', data.name);
-            this.setState({
-                isLogin: true
-            });
-            message.success('登录成功');
-            this.props.history.push('/');
-        });
+        postURL(url);
     }
     render() {
         const {getFieldDecorator} = this.props.form;

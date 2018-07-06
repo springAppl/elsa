@@ -16,6 +16,7 @@ let get = (url, resolve) => {
     return fetch(url, {
         credentials: 'same-origin'
     })
+    .then(checkRedirect)
     .then(parseJSON)
     .then(checkHttpCode)
     .then(resolve)
@@ -33,6 +34,7 @@ let post = (url, data, resolve) => {
           body: JSON.stringify(data),
         method: 'POST'
     })
+    .then(checkRedirect)
     .then(parseJSON)
     .then(checkHttpCode)
     .then(resolve)
@@ -49,6 +51,7 @@ let put = (url, data, resolve) => {
           body: JSON.stringify(data),
         method: 'PUT'
     })
+    .then(checkRedirect)
     .then(parseJSON)
     .then(checkHttpCode)
     .then(resolve)
@@ -61,24 +64,20 @@ let postURL = (url, resolve) => {
         credentials: 'same-origin',
         method: 'POST',
         redirect: "follow"
-    }).then((response) => {
-        console.log(response)
+    })
+    .then(checkRedirect)
+    .then(parseJSON)
+    .then(checkHttpCode)
+    .then(resolve)
+    .catch(error => {
+        message.error(error.message);
     });
-    // .then(checkRedirect);
-    // .then(parseJSON)
-    // .then(checkHttpCode)
-    // .then(resolve)
-    // .catch(error => {
-    //     message.error(error.message);
-    // });
 }
 let checkRedirect = (response) => {
-    console.log(response)
-    if (response.status >= 200 && response.status < 300) {
-        return response
-    } else if(response.status >= 300 && response.status < 400) {
-        console.log('go redirect')
-        this.props.history.push('/');
+    if (response.redirected) {
+        return window.location = response.url;
+    } else {
+        return response;
     }
 }
 export {get, post, put, postURL};

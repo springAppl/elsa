@@ -1,17 +1,18 @@
 import React from 'react';
 import LzEditor from 'react-lz-editor';
 import {Button, Input, Form, message} from 'antd';
-import '../css/post.css';
+import '../../css/article/post.css';
 import ArticleTags from './articleTags';
-import {put} from './FetchUtil';
+import {put} from '../FetchUtil';
 const FormItem = Form.Item;
 class Post extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            htmlContent: '请输入内容',
+            htmlContent: null,
             tags: ['java', 'spring', 'reactjs'],
-            id: null
+            id: null,
+            responseList: []
         };
     }
     handleSubmit = (e) => {
@@ -32,6 +33,7 @@ class Post extends React.Component {
     }
     receiveHtml = (content) => {
         this.setState({htmlContent: content});
+        this.setState({responseList:[]});
     }
     changeTags = (tags) => {
         this.setState({
@@ -40,35 +42,36 @@ class Post extends React.Component {
     }
     render() {
         const uploadProps = {
-            action: "http://v0.api.upyun.com/devopee",
+            action: "/api/image",
             onChange: this.onChange,
             listType: 'picture',
             fileList: this.state.responseList,
             data: (file) => {},
             multiple: true,
-            beforeUpload: this.beforeUpload,
             showUploadList: true
         }
         const {getFieldDecorator} = this.props.form;
         return (
+            <div>
             <Form onSubmit={this.handleSubmit}>
                 <FormItem>
                     <span className="title">标题</span>
                     {getFieldDecorator('title')(<Input/>)}
                 </FormItem>
                 <FormItem>
-                    <LzEditor
-                        importContent={this.state.htmlContent}
+                <LzEditor
+                        active={true}
+                        importContent='请输入内容'
                         cbReceiver={this.receiveHtml}
                         uploadProps={uploadProps}
                         lang="en"/>
-
                 </FormItem>
                 <FormItem>
                     <ArticleTags tags={this.state.tags} changeTags={this.changeTags}/>
                     <Button type="primary" htmlType="submit">提交</Button>
                 </FormItem>
             </Form>
+            </div>
         );
     }
 }
