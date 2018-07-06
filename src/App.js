@@ -6,7 +6,6 @@ import Home from './components/home';
 import Post from './components/article/post';
 import Register from './components/register';
 import ArticleDetail from './components/article/detail';
-import test from './components/article/test';
 
 class App extends Component {
     render() {
@@ -18,7 +17,6 @@ class App extends Component {
                     <Route path="/register" component={Register}/>
                     <Route path="/post" component={Post} />
                     <Route path="/article/detail/:id" component={ArticleDetail}/>
-                    <Route path="/test" component={test}/>
                 </div>
             </Router>
         );
