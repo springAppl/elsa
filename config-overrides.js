@@ -21,7 +21,7 @@ module.exports = {
       
             // set port
             config.proxy = {
-                "/api": "http://localhost:8080"
+                "/api": "http://www.jiaogegongren.com"
             };
             // Return your customised Webpack Development Server config.
             return config;
