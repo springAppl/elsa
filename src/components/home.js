@@ -50,7 +50,7 @@ export default class Home extends React.Component {
         });
     }
     getArticle = () => {
-        get('/api/article/paging?pageNo=' + this.state.current, (data) => {
+        get('http://www.jiaogegongren.com/api/article/paging?pageNo=' + this.state.current, (data) => {
             this.setState((prevState) => ({
                 data: prevState
                     .data
