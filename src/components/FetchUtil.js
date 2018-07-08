@@ -14,7 +14,8 @@ function parseJSON(response) {
 
 let get = (url, resolve) => {
     return fetch(url, {
-        credentials: 'same-origin'
+        credentials: 'same-origin',
+        mode: 'no-cors'
     })
     .then(checkRedirect)
     .then(parseJSON)
@@ -28,6 +29,7 @@ let get = (url, resolve) => {
 let post = (url, data, resolve) => {
     return fetch(url, {
         credentials: 'same-origin',
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json'
           },
@@ -45,6 +47,7 @@ let post = (url, data, resolve) => {
 let put = (url, data, resolve) => {
     return fetch(url, {
         credentials: 'same-origin',
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json'
           },
@@ -62,6 +65,7 @@ let put = (url, data, resolve) => {
 let postURL = (url, resolve) => {
     return fetch(url, {
         credentials: 'same-origin',
+        mode: 'no-cors',
         method: 'POST',
         redirect: "follow"
     })
