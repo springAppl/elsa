@@ -12,10 +12,10 @@ function parseJSON(response) {
     return response.json();
 }
 
-let get = (url, resolve) => {
+let get = (url, resolve, headers) => {
     return fetch(url, {
         credentials: 'same-origin',
-        mode: 'no-cors'
+        headers: headers
     })
     .then(checkRedirect)
     .then(parseJSON)
@@ -29,7 +29,6 @@ let get = (url, resolve) => {
 let post = (url, data, resolve) => {
     return fetch(url, {
         credentials: 'same-origin',
-        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json'
           },
@@ -47,11 +46,10 @@ let post = (url, data, resolve) => {
 let put = (url, data, resolve) => {
     return fetch(url, {
         credentials: 'same-origin',
-        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data),
+        },
+        body: JSON.stringify(data),
         method: 'PUT'
     })
     .then(checkRedirect)
@@ -62,12 +60,12 @@ let put = (url, data, resolve) => {
         message.error(error.message);
     });
 }
-let postURL = (url, resolve) => {
+let postURL = (url, resolve, headers) => {
     return fetch(url, {
         credentials: 'same-origin',
-        mode: 'no-cors',
         method: 'POST',
-        redirect: "follow"
+        redirect: "follow",
+        headers: headers
     })
     .then(checkRedirect)
     .then(parseJSON)
@@ -78,10 +76,11 @@ let postURL = (url, resolve) => {
     });
 }
 let checkRedirect = (response) => {
-    if (response.redirected) {
-        return window.location = response.url;
-    } else {
-        return response;
-    }
+    // if (response.redirected) {
+    //     return window.location = response.url;
+    // } else {
+    //     return response;
+    // }
+    return response;
 }
 export {get, post, put, postURL};

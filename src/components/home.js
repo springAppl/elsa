@@ -13,6 +13,7 @@ const IconText = ({type, text}) => (
         }}/> {text}
     </span>
 );
+var pageData = {};
 export default class Home extends React.Component {
     constructor() {
         super();
@@ -51,7 +52,7 @@ export default class Home extends React.Component {
     }
     getArticle = () => {
         get('/api/article/paging?pageNo=' + this.state.current, (data) => {
-            this.setState((prevState) => ({
+        this.setState((prevState) => ({
                 data: prevState
                     .data
                     .concat(data.elements),
