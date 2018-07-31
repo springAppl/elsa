@@ -21,7 +21,7 @@ module.exports = {
       
             // set port
             config.proxy = {
-                "/api": "http://www.jiaogongren.com"
+                "/api": "http://jiaogongren.com"
             };
             // Return your customised Webpack Development Server config.
             return config;
