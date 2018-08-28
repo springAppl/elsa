@@ -3,7 +3,7 @@ import { Menu, Icon, Row, Col} from 'antd';
 import blog from '../image/blog.png';
 import { Link } from 'react-router-dom';
 import '../css/navigator.css';
-import {get, post} from './FetchUtil';
+import {get, postURL} from './FetchUtil';
 import MenuItem from 'antd/lib/menu/MenuItem';
 const SubMenu = Menu.SubMenu;
 export default class Navigator extends React.Component {
@@ -28,7 +28,7 @@ export default class Navigator extends React.Component {
       })
   }
   logout = () => {
-    post('/api/logout');
+    postURL('/api/logout');
   }
   render() {
     const loginButton = this.state.name?(

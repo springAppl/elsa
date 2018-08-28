@@ -31,8 +31,8 @@ let post = (url, data, resolve) => {
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data),
+        },
+        body: JSON.stringify(data),
         method: 'POST'
     })
     .then(checkRedirect)
@@ -63,9 +63,7 @@ let put = (url, data, resolve) => {
 let postURL = (url, resolve, headers) => {
     return fetch(url, {
         credentials: 'same-origin',
-        method: 'POST',
-        redirect: "follow",
-        headers: headers
+        method: 'POST'
     })
     .then(checkRedirect)
     .then(parseJSON)
@@ -76,11 +74,11 @@ let postURL = (url, resolve, headers) => {
     });
 }
 let checkRedirect = (response) => {
-    // if (response.redirected) {
-    //     return window.location = response.url;
-    // } else {
-    //     return response;
-    // }
+    if (response.redirected) {
+        return window.location = response.url;
+    } else {
+        return response;
+    }
     return response;
 }
 export {get, post, put, postURL};

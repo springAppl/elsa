@@ -13,7 +13,6 @@ const IconText = ({type, text}) => (
         }}/> {text}
     </span>
 );
-var pageData = {};
 export default class Home extends React.Component {
     constructor() {
         super();

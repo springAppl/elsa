@@ -20,9 +20,9 @@ module.exports = {
             config = configFunction(proxy, allowedHost);
       
             // set port
-            config.proxy = {
-                "/api": "http://jiaogongren.com"
-            };
+            // config.proxy = {
+            //     "/api": "http://jiaogongren.com"
+            // };
             // Return your customised Webpack Development Server config.
             return config;
         }
